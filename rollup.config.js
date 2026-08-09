@@ -23,7 +23,7 @@ export default [
 			clear({ targets: ['dist'] }),
 			resolve({ rootDir: 'src' }),
 			commonjs(),
-			typescript({ tsconfig: './tsconfig.json' }) // so Rollup can convert TypeScript to JavaScript
+			typescript()
 		],
 		output: {
 			file: 'dist/main.js',
@@ -34,10 +34,10 @@ export default [
 	{
 		input: 'src/test.ts',
 		plugins: [
-			clear({ targets: ['dist'] }),
+			clear({ targets: ['dist_test'] }),
 			resolve({ rootDir: 'src' }),
 			commonjs(),
-			typescript({ tsconfig: './tsconfig.json' }), // so Rollup can convert TypeScript to JavaScript
+			typescript({ tsconfig: './src/tests/tsconfig.json' }),
 			screeps({ config: cfg, dryRun: cfg == null })
 		],
 		output: {

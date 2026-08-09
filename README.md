@@ -219,7 +219,40 @@ config.DEFAULT_MOVE_OPTS.routeCallback = room => {
 
 Cartographer includes a super-minimal Screeps bot which will maintain a spawn and generate scouts to collect room intelligence. This allows roads to be generated and visualized for debugging purposes, and also enables integration tests to catch regressions.
 
-To run the tests, simply run the build and copy the contents of `dist/test.js` to Screeps. The tests will reset and run again automatically after a global reset. Test output is logged to the console.
+To run the tests, simply run the build and upload the contents of `dist_test/main.js` to Screeps. The tests will reset and run again automatically after a global reset. Test output is logged to the console.
+
+### Testing with Docker Compose
+
+A number of configuration files have been provided to facilitate testing on a dedicated, containerized environment using [Docker Compose](https://docs.docker.com/compose/) with [steamless-client](screepers/steamless-client) and [Jomik's server](Jomik/screeps-server). To use this test environment.
+
+1. Install Docker and Docker Compose
+2. Make copies of the following configuration files:
+  - `.env.example`
+    - Create a copy of this file named `.env` and update the values
+    - See the READMEs for steamless client and Jomik's server for more information
+  - `config.sample.yml`
+    - Create a copy of this file named `config.sample.yml`
+    - This config is usable as-is
+  - `screeps.sample.json`
+    - Create a copy of this file named `screeps.json`
+3. Start the test environment:
+    ```sh
+    docker compose up -d --wait
+    ```
+4. Open steamless-client to the test server using the following URL: http://localhost:8080/(http://localhost:21025)/#!/
+5. Sign in via Steam and create your account.
+6. While signed in, create a password for your account using the following URL: http://localhost:8080/(http://localhost:21025)/#!/account/password
+6. Update `screeps.json` with the username and password of the account you just created.
+7. Claim a room and place your spawn
+8. Finally, upload the test code:
+    ```sh
+    npm run test-pserver
+    ```
+
+To stop the test environment:
+```sh
+docker compose down
+```
 
 ## Contributors
 

@@ -20,5 +20,5 @@ export const objectIdKey = (id: string, key?: string) => {
   for (let i = 0; i < paddedId.length; i += 3) {
     compressed += codec.encode(parseInt(paddedId.slice(i, i + 3), 16));
   }
-  return compressed + key ?? '';
+  return compressed + (key ?? '');
 };

@@ -1,16 +1,25 @@
 services:
   client:
-    image: node:16
-    working_dir: /home/root/client
-    command: sh -c 'npm install --log-level=error --no-progress laverdet/screeps-steamless-client && npx screeps-steamless-client --package /screeps.nw --host 0.0.0.0 --internal_backend http://screeps:21025 --backend http://localhost:21025'
-    environment:
-      SCREEPS_NW_PATH: ${SCREEPS_NW_PATH:?"Missing screeps nw file"}
+    image: "node:24"
+    command: >
+      npx screepers-steamless-client@latest
+      --package /screeps.nw
+      --host 0.0.0.0
+      --internal_backend http://screeps:21025/
     volumes:
-      - ${SCREEPS_NW_PATH}:/screeps.nw
-
+      - ${SCREEPS_NW_PATH:?"SCREEPS_NW_PATH not set"}:/screeps.nw
+      - client-npm-cache:/root/.npm
     ports:
-      - 8080:8080/tcp
+      - "${SCREEPS_PROXY_HOST:-127.0.0.1}:8080:8080/tcp"
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "sh", "-c", "curl --fail --silent http://127.0.0.1:8080/"]
+      interval: 30s
+      timeout: 5s
+      start_period: 5s
+      start_interval: 5s
+      retries: 3
+
   screeps:
     image: ghcr.io/jomik/screeps-server:edge
     volumes:
@@ -18,30 +27,53 @@ services:
       - screeps-data:/screeps
       - screeps-mods:/screeps/mods
     ports:
-      - 21025:21025/tcp
+      - "${SCREEPS_SERVER_HOST:-127.0.0.1}:21025:21025/tcp"
     environment:
       MONGO_HOST: mongo
       REDIS_HOST: redis
       STEAM_KEY: ${STEAM_KEY:?"Missing steam key"}
     restart: unless-stopped
-
-  curl:
-    image: quay.io/curl/curl:latest
-    network_mode: 'service:screeps'
+    depends_on:
+      mongo:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "sh", "-c", "curl --fail --silent http://127.0.0.1:21025/"]
+      interval: 30s
+      timeout: 5s
+      start_period: 5s
+      start_interval: 5s
+      retries: 3
 
   mongo:
     image: mongo:4.4.18
     volumes:
       - mongo-data:/data/db
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "sh", "-c", "echo 'db.runCommand(\"ping\").ok' | mongosh localhost:27017/test --quiet"]
+      interval: 30s
+      timeout: 5s
+      start_period: 5s
+      start_interval: 5s
+      retries: 3
 
   redis:
     image: redis:7
     volumes:
       - redis-data:/data
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 5s
+      start_period: 5s
+      start_interval: 5s
+      retries: 3
 
 volumes:
+  client-npm-cache:
   redis-data:
   mongo-data:
   screeps-data:
