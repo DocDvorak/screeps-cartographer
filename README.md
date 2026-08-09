@@ -223,7 +223,7 @@ To run the tests, simply run the build and upload the contents of `dist_test/mai
 
 ### Testing with Docker Compose
 
-A number of configuration files have been provided to facilitate testing on a dedicated, containerized environment using [Docker Compose](https://docs.docker.com/compose/) with [steamless-client](screepers/steamless-client) and [Jomik's server](Jomik/screeps-server). To use this test environment.
+A number of configuration files have been provided to facilitate testing on a dedicated, containerized environment using [Docker Compose](https://docs.docker.com/compose/) with [steamless-client](https://github.com/screepers/steamless-client) and [Jomik's server](https://github.com/Jomik/screeps-server). To use this test environment.
 
 1. Install Docker and Docker Compose
 2. Make copies of the following configuration files:
