@@ -3,7 +3,7 @@ set -euo pipefail
 
 # Tear down the test environment, recreate it, and wait for all services to be ready
 echo '(Re)creating test environment'
-docker compose down -v
+docker compose down -v screeps mongo redis
 docker compose up -d --wait
 
 # Pause the server to prevent server from entering an inconsistent state
