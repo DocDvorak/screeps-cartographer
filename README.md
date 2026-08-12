@@ -231,13 +231,13 @@ A number of configuration files have been provided to facilitate testing on a de
     - Create a copy of this file named `.env` and update the values
     - See the READMEs for steamless client and Jomik's server for more information
   - `config.sample.yml`
-    - Create a copy of this file named `config.sample.yml`
+    - Create a copy of this file named `config.yml`
     - This config is usable as-is
   - `screeps.sample.json`
     - Create a copy of this file named `screeps.json`
-3. Start the test environment:
+3. Initialize the test environment:
     ```sh
-    docker compose up -d --wait
+    ./reset-docker.sh
     ```
 4. Open steamless-client to the test server using the following URL: http://localhost:8080/(http://localhost:21025)/#!/
 5. Sign in via Steam and create your account.
