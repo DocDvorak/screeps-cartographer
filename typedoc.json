@@ -1,15 +1,9 @@
 {
-  "pluginPages": {
-    "pages": [
-      {
-        "title": "Implementation Details",
-        "children": [
-          {
-            "title": "Traffic Management",
-            "source": "./trafficManagement.md"
-          }
-        ]
-      }
-    ]
-  }
+  "$schema": "https://typedoc.org/schema.json",
+  "entryPoints": [
+    "src/main.ts"
+  ],
+  "projectDocuments": [
+    "pages/*.md",
+  ],
 }

@@ -24,13 +24,14 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v7
+      - run: corepack enable
       - name: Setup Node
         uses: actions/setup-node@v6
         with:
           node-version-file: ".node-version"
           registry-url: "https://registry.npmjs.org"
       - name: Install dependencies
-        run: npm install
+        run: npm clean-install
       - name: Build package
         run: npm run build
       - name: Publish to npm
@@ -41,12 +42,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v7
+      - run: corepack enable
       - name: Setup Node
         uses: actions/setup-node@v6
         with:
           node-version-file: ".node-version"
       - name: Install dependencies
-        run: npm install
+        run: npm clean-install
       - name: Build docs
         run: npm run build:docs
       - name: Upload artifact

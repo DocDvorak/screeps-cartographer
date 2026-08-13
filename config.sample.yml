@@ -1,0 +1,29 @@
+mods:
+  # https://github.com/ScreepsMods/screepsmod-auth
+  - screepsmod-auth
+  # https://github.com/ScreepsMods/screepsmod-admin-utils
+  - screepsmod-admin-utils
+  # https://github.com/ScreepsMods/screepsmod-mongo
+  - screepsmod-mongo
+
+bots: {}
+
+launcherOptions:
+  # If set, automatically ensures all mods are updated
+  autoUpdate: true
+  # If set, forward console messages to terminal
+  logConsole: true
+
+serverConfig:
+  # If screepsmod-admin-utils is installed,
+  # `utils.importMap` will be called automatically with the value of `map`
+  # See https://maps.screepspl.us/ for valid identifiers
+  # (defaults to "random_1_1")
+  # map: "random_11_11"
+  shardName: "shard2"
+  tickRate: 500 # ms
+  socketUpdateRate: 500 # ms
+  gclToCPU: true
+  maxCPU: 300
+  baseCPU: 300
+  stepCPU: 0

@@ -15,8 +15,9 @@ export class RoomPositionSet extends Set {
   }
   *entries() {
     for (const v of this.map.values()) {
-      yield [v, v] as [any, any];
+      yield [v, v] as [RoomPosition, RoomPosition];
     }
+    return undefined;
   }
   values() {
     return this.map.values();

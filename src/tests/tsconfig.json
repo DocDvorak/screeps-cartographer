@@ -1,0 +1,12 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "declarationDir": "../../dist_test",
+    "outDir": "../../dist_test",
+    "rootDir": "..",
+  },
+  "include": [
+    ".."
+  ],
+  "exclude": []
+}
