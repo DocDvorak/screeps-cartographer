@@ -50,5 +50,6 @@
   },
   "dependencies": {
     "screeps-utf15": "^1.0.1"
-  }
+  },
+  "packageManager": "npm@12.0.2"
 }
